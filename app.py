@@ -12,6 +12,7 @@ from wtforms import StringField, PasswordField
 from wtforms.validators import Length, Email
 
 from werkzeug.security import generate_password_hash, check_password_hash
+from dash_application import create_dash_application
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "THIS IS A SECRET, DON'T DO THIS!"
@@ -21,7 +22,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager()
 login.init_app(app)
-
+create_dash_application(app)
 
 @login.user_loader
 def user_loader(user_id):
@@ -86,7 +87,6 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for("index"))
-
 
 if __name__ == "__main__":
     app.run()
